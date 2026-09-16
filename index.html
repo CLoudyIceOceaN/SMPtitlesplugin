@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SMPtitlesplugin</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(180deg, #10131c 0%, #1c0f1a 100%);
+    color: #f2f2f2; min-height: 100vh; padding: 48px 16px;
+    display: flex; justify-content: center;
+  }
+  .wrap { max-width: 560px; width: 100%; }
+  h1 { font-size: 2rem; margin-bottom: 4px; }
+  h1 span { color: #ff8ac2; }
+  .sub { color: #b9b9b9; margin-bottom: 20px; }
+  .demo {
+    text-align: center; margin-bottom: 24px; line-height: 1.35;
+    font-family: ui-monospace, Menlo, monospace;
+  }
+  .demo .t { color: #ffd964; font-weight: 800; font-size: 1.1rem; }
+  .demo .n { color: #eaeaea; }
+  .demo .cap { color: #777; font-size: .8rem; font-family: -apple-system, sans-serif; }
+  .btn {
+    display: block; text-align: center; text-decoration: none;
+    background: #ff8ac2; color: #1c0f1a; font-weight: 800; font-size: 1.25rem;
+    padding: 18px; border-radius: 14px; margin-bottom: 10px;
+  }
+  .btn:hover { background: #ffa8d1; }
+  .tiny { text-align: center; color: #8b8b8b; font-size: .85rem; margin-bottom: 32px; }
+  .card {
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+    border-radius: 14px; padding: 20px 22px; margin-bottom: 16px;
+  }
+  .card h2 { font-size: 1.05rem; color: #ff8ac2; margin-bottom: 10px; }
+  ol, ul { padding-left: 22px; display: grid; gap: 8px; }
+  code {
+    background: rgba(255,255,255,.12); padding: 2px 7px; border-radius: 6px;
+    font-family: ui-monospace, Menlo, monospace; font-size: .9em;
+  }
+  pre {
+    background: #0b0e15; border: 1px solid rgba(255,255,255,.15);
+    border-radius: 10px; padding: 12px 14px; overflow-x: auto;
+    font-family: ui-monospace, Menlo, monospace; font-size: .82rem;
+    color: #d8d8d8; line-height: 1.5;
+  }
+  .cmdrow { display: flex; gap: 8px; margin: 10px 0 8px; }
+  .cmd {
+    flex: 1; background: #0b0e15; border: 1px solid rgba(255,255,255,.15);
+    border-radius: 10px; padding: 12px 14px; overflow-x: auto; white-space: nowrap;
+    font-family: ui-monospace, Menlo, monospace; font-size: .85rem; color: #7fe07f;
+  }
+  .copy {
+    background: rgba(255,255,255,.12); color: #f2f2f2; border: 0;
+    border-radius: 10px; padding: 0 16px; font-weight: 700; cursor: pointer;
+    font-size: .9rem;
+  }
+  .copy:hover { background: rgba(255,255,255,.2); }
+  .note { color: #b9b9b9; font-size: .9rem; }
+  a.plain { color: #ffa8d1; }
+  footer { text-align: center; color: #777; font-size: .85rem; margin-top: 28px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1><span>SMP</span>titlesplugin</h1>
+  <p class="sub">Buy titles that float above your nametag — for BladeSMP
+  (Eaglercraft 1.8 / Spigot 1.8.8).</p>
+
+  <div class="demo">
+    <div class="t">&#9876; KING &#9876;</div>
+    <div class="n">Steve</div>
+    <div class="cap">the title floats above the nametag, visible to everyone</div>
+  </div>
+
+  <a class="btn" href="SMPtitlesplugin.jar" download>&#11015;&#65039; Download SMPtitlesplugin.jar</a>
+  <p class="tiny">version 1.0 &middot; needs SMPmoneyplugin (the installer grabs it for you)</p>
+
+  <div class="card">
+    <h2>&#9889; Fastest way: one command</h2>
+    <p class="note">Terminal → <code>cd</code> into your server folder → paste:</p>
+    <div class="cmdrow">
+      <div class="cmd" id="cmd">curl -sL https://cloudyiceocean.github.io/SMPtitlesplugin/install.sh | bash</div>
+      <button class="copy" onclick="navigator.clipboard.writeText(document.getElementById('cmd').textContent).then(()=>{this.textContent='&#10003;';setTimeout(()=>this.textContent='Copy',1200)})">Copy</button>
+    </div>
+    <p class="note">Then restart the server.</p>
+  </div>
+
+  <div class="card">
+    <h2>For players — <code>/titles</code></h2>
+    <ul>
+      <li>The shop shows every title as an <b>enchanted book</b> — hover to
+        preview exactly how it looks and the price</li>
+      <li>Click to buy (with a confirm screen) — it goes on instantly</li>
+      <li>The <b>chest at the bottom</b> = your titles: equip, swap, or
+        remove them any time</li>
+      <li>Titles survive deaths, teleports, and relogs</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>For the owner — adding titles</h2>
+    <p class="note" style="margin-bottom:8px">The plugin ships with <b>no
+    titles</b> — you add your own in
+    <code>plugins/SMPtitlesplugin/config.yml</code>:</p>
+<pre>titles:
+  king:
+    name: "&amp;6&amp;lKING"
+    price: 50000
+    font: normal
+  shadow:
+    name: "&amp;8Shadow"
+    price: 10000
+    font: smallcaps</pre>
+    <p class="note" style="margin-top:8px">Fonts: <code>normal</code>,
+    <code>smallcaps</code> (small capital letters — looks the best),
+    <code>fullwidth</code> (wide letters), <code>circled</code> (letters in
+    circles). Save, then type <code>/titles reload</code> in game — no
+    restart. <code>/titles give Steve king</code> gives one for free.</p>
+  </div>
+
+  <footer>Source code &amp; help: <a class="plain" href="https://github.com/CLoudyIceOceaN/SMPtitlesplugin">github.com/CLoudyIceOceaN/SMPtitlesplugin</a></footer>
+</div>
+</body>
+</html>

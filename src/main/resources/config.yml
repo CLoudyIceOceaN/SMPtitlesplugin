@@ -1,0 +1,60 @@
+# ==================================================
+#  SMPtitlesplugin - buy titles that float above
+#  your nametag!
+#
+#  ADD YOUR OWN TITLES BELOW. There are none yet on
+#  purpose - copy an example, remove the # signs,
+#  then run /titles reload in game (no restart!).
+#
+#  Colors: &6 gold, &e yellow, &a green, &c red,
+#  &b aqua, &d pink, &f white, &7 gray, &5 purple,
+#  &l bold, &o italic, &k magic scramble
+#
+#  Fonts (changes the letters themselves):
+#    normal     KING
+#    smallcaps  KING as small capitals
+#    fullwidth  wide spaced-out letters
+#    circled    letters inside circles
+#  Tip: smallcaps looks the best and always works.
+#  If a font shows squares in game, use normal.
+# ==================================================
+
+titles:
+# king:
+#   name: "&6&lKING"
+#   price: 50000
+#   font: normal
+#
+# shadow:
+#   name: "&8Shadow"
+#   price: 10000
+#   font: smallcaps
+#
+# rich:
+#   name: "&a$&2Rich&a$"
+#   price: 250000
+#   font: normal
+#
+# legend:
+#   name: "&d&lLegend"
+#   price: 100000
+#   font: circled
+
+# Menu titles (max 32 letters)
+gui:
+  shop-title: "&8Titles"
+  mine-title: "&8Your Titles"
+  confirm-title: "&8Buy this title?"
+
+# Chat messages
+messages:
+  prefix: "&d&lTitles &8» &f"
+  bought: "&fYou bought %title%&f! It's on your head right now."
+  equipped: "&fYou are now %title%&f!"
+  unequipped: "&fTitle removed. You're just you again."
+  not-enough: "&cYou don't have enough money!"
+  no-permission: "&cYou can't use that."
+  player-not-found: "&cCan't find that player."
+  title-not-found: "&cNo title with that id. Check config.yml!"
+  given: "&fGave &e%player% &fthe title %title%&f."
+  reloaded: "&aTitles reloaded!"

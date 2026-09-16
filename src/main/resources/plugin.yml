@@ -1,0 +1,17 @@
+name: SMPtitlesplugin
+main: dev.bladesmp.titles.TitlesPlugin
+version: "1.0"
+author: Colin Ang
+description: Buy titles that float above your nametag. For BladeSMP.
+depend: [SMPmoneyplugin]
+
+commands:
+  titles:
+    description: Open the titles shop (admin - reload, give)
+    usage: /titles [reload | give <player> <id>]
+    aliases: [title]
+
+permissions:
+  titles.admin:
+    description: Reload titles and give them to players
+    default: op
