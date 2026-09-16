@@ -22,8 +22,13 @@ Then **restart the server**.
 
 ## How it works for players
 
-- `/titles` opens the shop. Every title is an **enchanted book** — hover
-  one to see exactly how it will look above your head, and its price.
+![The titles menu](images/titles-menu.svg)
+
+*(mockup — in game it's the real glowing enchanted book texture)*
+
+- `/titles` opens the menu. **Every title is an enchanted book** — hover
+  a book and it tells you the title: exactly how it will look above your
+  head, plus the price.
 - Click a book to buy it (with a confirm screen). Buying it puts it on
   right away.
 - The **chest at the bottom** opens *Your Titles* — everything you own.
