@@ -95,6 +95,10 @@ public class TitleGui implements Listener {
         List<String> lore = new ArrayList<String>();
         lore.add(plugin.color("&7Above your head it shows:"));
         lore.add(plugin.color("   " + t.display));
+        if (!t.description.isEmpty()) {
+            lore.add("");
+            lore.addAll(t.description);
+        }
         lore.add("");
         if (equipped) {
             lore.add(plugin.color("&a&lEQUIPPED"));
@@ -102,6 +106,10 @@ public class TitleGui implements Listener {
         } else if (owned) {
             lore.add(plugin.color("&aYou own this title"));
             lore.add(plugin.color("&eClick &7to equip it"));
+        } else if (!t.buyable) {
+            lore.add(plugin.color("&d&l✦ EVENT REWARD"));
+            lore.add(plugin.color("&7Can't be bought — win it in"));
+            lore.add(plugin.color("&7server events and giveaways!"));
         } else {
             lore.add(plugin.color("&7Price: &a" + plugin.getEconomy().format(t.price)));
             lore.add(plugin.color("&eClick &7to buy it"));
@@ -190,6 +198,9 @@ public class TitleGui implements Listener {
                 if (plugin.getTitles().owns(player, id)) {
                     toggleEquip(player, t);
                     openShop(player, shop.page);
+                } else if (!t.buyable) {
+                    player.sendMessage(plugin.msg("event-only"));
+                    player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1f, 1f);
                 } else {
                     openConfirm(player, t, shop.page);
                 }

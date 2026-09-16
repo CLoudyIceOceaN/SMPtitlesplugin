@@ -108,18 +108,34 @@
     <code>plugins/SMPtitlesplugin/config.yml</code>:</p>
 <pre>titles:
   king:
-    name: "&amp;6&amp;lKING"
+    name: "&amp;6&amp;l&#9819; KING &#9819;"     # &amp; colors + symbols work!
     price: 50000
     font: normal
-  shadow:
-    name: "&amp;8Shadow"
-    price: 10000
-    font: smallcaps</pre>
+  rainbow:
+    name: "RAINBOW"
+    price: 250000
+    rainbow: true          # every letter a different color
+    bold: true
+  champion:
+    name: "&amp;e&amp;l&#10022; CHAMPION &#10022;"
+    buyable: false         # event/giveaway reward only!</pre>
     <p class="note" style="margin-top:8px">Fonts: <code>normal</code>,
     <code>smallcaps</code> (small capital letters — looks the best),
-    <code>fullwidth</code> (wide letters), <code>circled</code> (letters in
-    circles). Save, then type <code>/titles reload</code> in game — no
-    restart. <code>/titles give Steve king</code> gives one for free.</p>
+    <code>fullwidth</code>, <code>circled</code>. Plus <code>description</code>
+    lines shown in the shop. Save, then <code>/titles reload</code> in game —
+    no restart.</p>
+  </div>
+
+  <div class="card">
+    <h2>Events, giveaways &amp; NPCs</h2>
+    <ul>
+      <li><code>buyable: false</code> titles show as <b>&#10022; EVENT REWARD</b>
+        in the shop — hand them out with <code>/titles give Steve champion</code>,
+        take them back with <code>/titles take</code></li>
+      <li>Type <code>/titles npc</code> and right-click a villager — now
+        <b>right-clicking that villager opens the titles shop</b> for everyone
+        (and it can't be hurt)</li>
+    </ul>
   </div>
 
   <footer>Source code &amp; help: <a class="plain" href="https://github.com/CLoudyIceOceaN/SMPtitlesplugin">github.com/CLoudyIceOceaN/SMPtitlesplugin</a></footer>

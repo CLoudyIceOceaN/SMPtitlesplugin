@@ -31,7 +31,8 @@ public class Commands implements CommandExecutor {
             return true;
         }
 
-        if (args.length >= 3 && args[0].equalsIgnoreCase("give")) {
+        if (args.length >= 3 && (args[0].equalsIgnoreCase("give")
+                || args[0].equalsIgnoreCase("take"))) {
             if (!sender.hasPermission("titles.admin")) {
                 sender.sendMessage(plugin.msg("no-permission"));
                 return true;
@@ -46,10 +47,33 @@ public class Commands implements CommandExecutor {
                 sender.sendMessage(plugin.msg("title-not-found"));
                 return true;
             }
-            plugin.getTitles().addOwned(target.getUniqueId(), t.id);
-            sender.sendMessage(plugin.msg("given")
-                    .replace("%player%", target.getName())
-                    .replace("%title%", t.display));
+            if (args[0].equalsIgnoreCase("give")) {
+                plugin.getTitles().addOwned(target.getUniqueId(), t.id);
+                sender.sendMessage(plugin.msg("given")
+                        .replace("%player%", target.getName())
+                        .replace("%title%", t.display));
+                target.sendMessage(plugin.msg("won")
+                        .replace("%title%", t.display));
+            } else {
+                plugin.getTitles().removeOwned(target.getUniqueId(), t.id);
+                plugin.getHeads().applyEquipped(target);
+                sender.sendMessage(plugin.msg("taken")
+                        .replace("%player%", target.getName())
+                        .replace("%title%", t.display));
+            }
+            return true;
+        }
+
+        if (args.length >= 1 && args[0].equalsIgnoreCase("npc")) {
+            if (!sender.hasPermission("titles.admin")) {
+                sender.sendMessage(plugin.msg("no-permission"));
+                return true;
+            }
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("Players only.");
+                return true;
+            }
+            plugin.getNpcs().startLinking((Player) sender);
             return true;
         }
 

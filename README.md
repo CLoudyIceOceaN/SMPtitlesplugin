@@ -40,38 +40,59 @@ Then **restart the server**.
 ```yaml
 titles:
   king:
-    name: "&6&lKING"
+    name: "&6&l♛ KING ♛"
     price: 50000
     font: normal
-  shadow:
-    name: "&8Shadow"
-    price: 10000
-    font: smallcaps
+    description:
+      - "&7For players with WAY too much money."
+  rainbow:
+    name: "RAINBOW"
+    price: 250000
+    rainbow: true
+    bold: true
+  champion:
+    name: "&e&l✦ CHAMPION ✦"
+    price: 0
+    buyable: false
+    description:
+      - "&7Win a server event to get this!"
 ```
 
-- The id (`king`) is just for commands — players see the `name`.
-- `name` uses `&` color codes: `&6` gold, `&d` pink, `&l` bold...
-- `price` is in server money.
-- `font` changes the letters themselves:
+Everything a title can have:
 
-| font | what it does |
+| option | what it does |
 |---|---|
-| `normal` | regular letters |
-| `smallcaps` | turns letters into small capitals — looks the best |
-| `fullwidth` | wide, spaced-out letters |
-| `circled` | every letter inside a little circle |
+| `name` | the title text — **`&` colors work** (`&6` gold, `&d` pink, `&l` bold...) and so do pasted symbols: ✦ ★ ♛ ❖ ☠ ➤ |
+| `price` | cost in server money |
+| `font` | `normal` / `smallcaps` (small capitals — looks the best) / `fullwidth` / `circled` |
+| `rainbow` | `true` = every letter gets a different color automatically |
+| `bold` | `true` = makes rainbow letters bold |
+| `buyable` | `false` = **event/giveaway reward** — shows in the shop as "✦ EVENT REWARD, can't be bought", and only `/titles give` can hand it out |
+| `description` | extra lore lines shown on the book in the shop |
 
 Save the file and type **`/titles reload`** in game — no restart, and
 anyone already wearing a renamed title gets the new look instantly.
 If a font shows squares in game, that font isn't in the client — use
 `normal` or `smallcaps`.
 
+## Link an NPC (like a villager) to the menu
+
+1. Stand next to the mob and type `/titles npc`
+2. Right-click the mob — done!
+
+Now **anyone who right-clicks it opens the titles shop** (a linked
+villager won't open its trades). Right-clicking a linked mob while in
+`/titles npc` mode unlinks it again. Linked mobs can't be hurt
+(turn that off with `protect-npcs: false`).
+
 ## Admin commands
 
 | Command | What it does |
 |---|---|
 | `/titles reload` | Reload config.yml after editing (OP only) |
-| `/titles give Steve king` | Give a player a title for free (OP only) |
+| `/titles give Steve king` | Give a title for free — perfect for **events and giveaways** (the winner gets a "You got the title!" message) |
+| `/titles take Steve king` | Take a title away again |
+| `/titles npc` | Link (or unlink) the next mob you right-click to the menu |
 
 Who owns what is saved in `plugins/SMPtitlesplugin/players.yml`.
 

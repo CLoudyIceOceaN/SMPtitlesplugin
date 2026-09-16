@@ -25,11 +25,16 @@ public class Titles {
         public final String id;
         public final String display;   // colored, font applied — ready to show
         public final double price;
+        public final boolean buyable;  // false = event/giveaway reward only
+        public final List<String> description;
 
-        public Title(String id, String display, double price) {
+        public Title(String id, String display, double price,
+                     boolean buyable, List<String> description) {
             this.id = id;
             this.display = display;
             this.price = price;
+            this.buyable = buyable;
+            this.description = description;
         }
     }
 
@@ -38,6 +43,8 @@ public class Titles {
     private final List<Title> all = new ArrayList<Title>();
     private final Map<UUID, Set<String>> owned = new HashMap<UUID, Set<String>>();
     private final Map<UUID, String> equipped = new HashMap<UUID, String>();
+    // Mobs that open the titles menu when right-clicked
+    private final Set<UUID> npcs = new HashSet<UUID>();
 
     public Titles(TitlesPlugin plugin) {
         this.plugin = plugin;
@@ -55,9 +62,16 @@ public class Titles {
             ConfigurationSection s = section.getConfigurationSection(id);
             if (s == null) continue;
             String raw = s.getString("name", id);
-            String font = s.getString("font", "normal");
-            all.add(new Title(id, plugin.color(applyFont(raw, font)),
-                    s.getDouble("price", 0)));
+            String styled = applyFont(raw, s.getString("font", "normal"));
+            String display = s.getBoolean("rainbow", false)
+                    ? rainbow(styled, s.getBoolean("bold", false))
+                    : plugin.color(styled);
+            List<String> description = new ArrayList<String>();
+            for (String line : s.getStringList("description")) {
+                description.add(plugin.color(line));
+            }
+            all.add(new Title(id, display, s.getDouble("price", 0),
+                    s.getBoolean("buyable", true), description));
         }
     }
 
@@ -65,11 +79,18 @@ public class Titles {
         if (!file.exists()) return;
         YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
         for (String key : yaml.getKeys(false)) {
+            if (key.equals("npcs")) continue;
             try {
                 UUID id = UUID.fromString(key);
                 owned.put(id, new HashSet<String>(yaml.getStringList(key + ".owned")));
                 String eq = yaml.getString(key + ".equipped");
                 if (eq != null) equipped.put(id, eq);
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        for (String id : yaml.getStringList("npcs")) {
+            try {
+                npcs.add(UUID.fromString(id));
             } catch (IllegalArgumentException ignored) {
             }
         }
@@ -85,6 +106,9 @@ public class Titles {
                     ? new ArrayList<String>() : new ArrayList<String>(titles));
             yaml.set(id + ".equipped", equipped.get(id));
         }
+        List<String> npcList = new ArrayList<String>();
+        for (UUID id : npcs) npcList.add(id.toString());
+        yaml.set("npcs", npcList);
         try {
             yaml.save(file);
         } catch (IOException e) {
@@ -116,6 +140,16 @@ public class Titles {
         save();
     }
 
+    /** Take a title away (also takes it off their head if worn). */
+    public void removeOwned(UUID player, String id) {
+        Set<String> set = owned.get(player);
+        if (set != null) set.remove(id);
+        if (id.equalsIgnoreCase(String.valueOf(equipped.get(player)))) {
+            equipped.remove(player);
+        }
+        save();
+    }
+
     public List<Title> ownedBy(Player player) {
         List<Title> list = new ArrayList<Title>();
         for (Title t : all) {
@@ -140,12 +174,54 @@ public class Titles {
         save();
     }
 
+    // ===== npc links =====
+
+    public boolean isNpc(UUID entity) {
+        return npcs.contains(entity);
+    }
+
+    /** Links or unlinks a mob. Returns true if it is now linked. */
+    public boolean toggleNpc(UUID entity) {
+        boolean nowLinked;
+        if (npcs.contains(entity)) {
+            npcs.remove(entity);
+            nowLinked = false;
+        } else {
+            npcs.add(entity);
+            nowLinked = true;
+        }
+        save();
+        return nowLinked;
+    }
+
     // ===== fonts =====
     // Turns normal letters into fancy Minecraft-friendly alphabets.
     // Color codes (&6 etc.) are skipped so they keep working.
 
     private static final String LOWER = "abcdefghijklmnopqrstuvwxyz";
     private static final String SMALLCAPS = "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀꜱᴛᴜᴠᴡxʏᴢ";
+    private static final char[] RAINBOW = {'c', '6', 'e', 'a', 'b', 'd'};
+
+    /** Colors every letter a different color. Existing color codes are dropped. */
+    public static String rainbow(String text, boolean bold) {
+        StringBuilder out = new StringBuilder();
+        int color = 0;
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if ((c == '&' || c == '§') && i + 1 < text.length()) {
+                i++; // rainbow picks the colors — skip any written codes
+                continue;
+            }
+            if (c == ' ') {
+                out.append(' ');
+                continue;
+            }
+            out.append('§').append(RAINBOW[color++ % RAINBOW.length]);
+            if (bold) out.append('§').append('l');
+            out.append(c);
+        }
+        return out.toString();
+    }
 
     public static String applyFont(String text, String font) {
         if (font == null || font.equalsIgnoreCase("normal")) return text;

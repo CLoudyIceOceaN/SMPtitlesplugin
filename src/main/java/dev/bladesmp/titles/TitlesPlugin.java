@@ -13,6 +13,7 @@ public class TitlesPlugin extends JavaPlugin {
     private Titles titles;
     private HeadTitle heads;
     private TitleGui gui;
+    private Npcs npcs;
 
     @Override
     public void onEnable() {
@@ -29,8 +30,10 @@ public class TitlesPlugin extends JavaPlugin {
         titles = new Titles(this);
         heads = new HeadTitle(this);
         gui = new TitleGui(this);
+        npcs = new Npcs(this);
         Bukkit.getPluginManager().registerEvents(heads, this);
         Bukkit.getPluginManager().registerEvents(gui, this);
+        Bukkit.getPluginManager().registerEvents(npcs, this);
 
         getCommand("titles").setExecutor(new Commands(this));
 
@@ -52,6 +55,7 @@ public class TitlesPlugin extends JavaPlugin {
     public Titles getTitles() { return titles; }
     public HeadTitle getHeads() { return heads; }
     public TitleGui getGui() { return gui; }
+    public Npcs getNpcs() { return npcs; }
 
     public String color(String text) {
         return ChatColor.translateAlternateColorCodes('&', text);

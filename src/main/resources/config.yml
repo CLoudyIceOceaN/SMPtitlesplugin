@@ -6,39 +6,59 @@
 #  purpose - copy an example, remove the # signs,
 #  then run /titles reload in game (no restart!).
 #
+#  EVERYTHING a title can have:
+#    name:        the title text, with & colors
+#    price:       cost in server money
+#    font:        normal / smallcaps / fullwidth / circled
+#    rainbow:     true = every letter a different color
+#    bold:        true = make rainbow letters bold
+#    buyable:     false = event/giveaway reward only!
+#                 (give it out with /titles give)
+#    description: extra lines shown in the shop
+#
 #  Colors: &6 gold, &e yellow, &a green, &c red,
 #  &b aqua, &d pink, &f white, &7 gray, &5 purple,
-#  &l bold, &o italic, &k magic scramble
+#  &0 black, &l bold, &o italic, &k magic scramble
 #
-#  Fonts (changes the letters themselves):
-#    normal     KING
-#    smallcaps  KING as small capitals
-#    fullwidth  wide spaced-out letters
-#    circled    letters inside circles
-#  Tip: smallcaps looks the best and always works.
+#  Fonts:  smallcaps looks the best and always works.
 #  If a font shows squares in game, use normal.
+#
+#  Symbols work too! Paste them right in the name:
+#  * (star) and these: ✦ ★ ☆ ♛ ♜ ❖ ☠ ☮ ✿ ➤ ✔
+#
+#  Link a mob to the menu: stand next to a villager,
+#  type /titles npc, then right-click it. Now anyone
+#  who right-clicks it sees the titles shop!
 # ==================================================
 
 titles:
 # king:
-#   name: "&6&lKING"
+#   name: "&6&l♛ KING ♛"
 #   price: 50000
 #   font: normal
+#   description:
+#     - "&7For players with WAY too much money."
 #
 # shadow:
 #   name: "&8Shadow"
 #   price: 10000
 #   font: smallcaps
 #
-# rich:
-#   name: "&a$&2Rich&a$"
+# rainbow:
+#   name: "RAINBOW"
 #   price: 250000
-#   font: normal
+#   rainbow: true
+#   bold: true
 #
-# legend:
-#   name: "&d&lLegend"
-#   price: 100000
-#   font: circled
+# champion:
+#   name: "&e&l✦ CHAMPION ✦"
+#   price: 0
+#   buyable: false
+#   description:
+#     - "&7Win a server event to get this!"
+
+# Linked NPCs can't be hurt while this is true
+protect-npcs: true
 
 # Menu titles (max 32 letters)
 gui:
@@ -53,8 +73,15 @@ messages:
   equipped: "&fYou are now %title%&f!"
   unequipped: "&fTitle removed. You're just you again."
   not-enough: "&cYou don't have enough money!"
+  event-only: "&d✦ &fThat one can't be bought — win it in an event or giveaway!"
   no-permission: "&cYou can't use that."
   player-not-found: "&cCan't find that player."
   title-not-found: "&cNo title with that id. Check config.yml!"
   given: "&fGave &e%player% &fthe title %title%&f."
+  won: "&d✦ &fYou got the title %title%&f! Equip it with /titles."
+  taken: "&fTook %title% &faway from &e%player%&f."
   reloaded: "&aTitles reloaded!"
+  npc-mode-on: "&aRight-click a mob to link it to the titles menu. (Type /titles npc again to cancel; right-click a linked mob to unlink it.)"
+  npc-mode-off: "&7Okay, cancelled."
+  npc-linked: "&aLinked! Right-clicking that mob now opens the titles menu."
+  npc-unlinked: "&7Unlinked. That mob is just a normal mob again."

@@ -7,8 +7,8 @@ depend: [SMPmoneyplugin]
 
 commands:
   titles:
-    description: Open the titles shop (admin - reload, give)
-    usage: /titles [reload | give <player> <id>]
+    description: Open the titles shop (admin - reload, give, take, npc)
+    usage: /titles [reload | give <player> <id> | take <player> <id> | npc]
     aliases: [title]
 
 permissions:
